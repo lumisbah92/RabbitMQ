@@ -1,9 +1,10 @@
-import { TaskMessage, QUEUE } from "./types";
-import { createConnection } from "./connection";
+import { TaskMessage, QUEUE } from "../types";
+import { createConnection } from "../connection";
 
 async function produce(message: TaskMessage): Promise<void> {
   try {
     const connection = await createConnection();
+    console.log("✅ Producer connected to RabbitMQ");
     const channel = await connection.createChannel();
 
     await channel.assertQueue(QUEUE, { durable: true });

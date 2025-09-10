@@ -4,8 +4,8 @@
   "description": "RabbitMQ producer and consumer implementation",
   "scripts": {
     "build": "tsc",
-    "start:producer": "ts-node src/producer.ts",
-    "start:consumer": "ts-node src/consumer.ts"
+    "start:simple-producer": "ts-node src/simple/producer.ts",
+    "start:simple-consumer": "ts-node src/simple/consumer.ts"
   },
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",
