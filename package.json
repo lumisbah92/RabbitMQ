@@ -5,7 +5,9 @@
   "scripts": {
     "build": "tsc",
     "start:simple-producer": "ts-node src/simple/producer.ts",
-    "start:simple-consumer": "ts-node src/simple/consumer.ts"
+    "start:simple-consumer": "ts-node src/simple/consumer.ts",
+    "start:work-queue-producer": "ts-node src/work-queue/producer.ts",
+    "start:work-queue-consumer": "ts-node src/work-queue/consumer.ts"
   },
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",

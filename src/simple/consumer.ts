@@ -11,7 +11,7 @@ async function startConsumer(): Promise<void> {
     await channel.assertQueue(QUEUE, { durable: true });
 
     // Fair dispatch: do not give more than 1 unacked message to a worker
-    channel.prefetch(0);
+    channel.prefetch(1);
 
     // Consume messages from the queue
     channel.consume(QUEUE, (msg: any) => onMessage(msg, channel), { noAck: false });
