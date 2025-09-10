@@ -2,42 +2,25 @@ import { TaskMessage, QUEUE } from "./types";
 import { createConnection } from "./connection";
 
 async function produce(message: TaskMessage): Promise<void> {
-  let conn: any = null;
-  let ch: any = null;
-
   try {
-    conn = await createConnection();
-    ch = await conn.createChannel();
+    const connection = await createConnection();
+    const channel = await connection.createChannel();
 
-    // Ensure queue exists and is durable
-    await ch.assertQueue(QUEUE, { durable: true });
-    console.log(`📋 Queue "${QUEUE}" is ready`);
+    await channel.assertQueue(QUEUE, { durable: true });
 
     const buffer = Buffer.from(JSON.stringify(message));
-    const sent = ch.sendToQueue(QUEUE, buffer, { persistent: true });
+    const sent = channel.sendToQueue(QUEUE, buffer, { persistent: true });
     
     if (sent) {
       console.log("📤 Message sent successfully:", message);
     } else {
       console.warn("⚠️ Message was not sent (queue might be full)");
     }
+    await channel.close();
+    await connection.close();
   } catch (err) {
     console.error("❌ Producer error:", err);
     throw err;
-  } finally {
-    // Close resources cleanly
-    try {
-      if (ch) {
-        await ch.close();
-        console.log("🔒 Channel closed");
-      }
-      if (conn) {
-        await conn.close();
-        console.log("🔒 Connection closed");
-      }
-    } catch (e) {
-      console.error("Error closing resources:", e);
-    }
   }
 }
 
